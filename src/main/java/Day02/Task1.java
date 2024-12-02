@@ -23,8 +23,10 @@ public class Task1 {
     private static boolean isSafe(List<Integer> reports) {
         final var queue = new ArrayDeque<>(reports);
         final var last = Optional.ofNullable(queue.poll());
-        return last.map(l->
-                Task1.next(queue, l, Optional.ofNullable(queue.peek()).map(p->p>l).orElse(false))
+        return last.map(l -> {
+                    final var isIncreasing = Optional.ofNullable(queue.peek()).map(p -> p > l).orElse(false);
+                    return Task1.next(queue, l, isIncreasing);
+                }
         ).orElse(true);
     }
 
